@@ -11,40 +11,35 @@ fsUsingCallback.callBackCreate(data, (error) => {
         console.log(`Error encountered: ${error}`);
         return;
     } else {
-        setTimeout(() => {
-            fsUsingCallback.callBackDelete((error) => {
-                if (error) {
-                    console.log(`Error encountered: ${error}`);
-                    return;
-                } else {
-                    console.log(`All files Deleted using callbacks`);
-                }
-            });
-        }, 5000)
+        fsUsingCallback.callBackDelete((error) => {
+            if (error) {
+                console.log(`Error encountered: ${error}`);
+                return;
+            } else {
+                console.log(`All files Deleted using callbacks`);
+            }
+        });
     }
 });
 
 //Using Promises only
 
-fsUsingPromise.promiseMakeDir('test1_files')
+fsUsingPromise
+    .promiseMakeDir('test1_files')
     .then(() => {
         return fsUsingPromise.promiseCreate(data);
     })
     .then(() => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(fsUsingPromise.promiseDelete());
-            }, 5000);
-        });
+        return fsUsingPromise.promiseDelete();
     })
     .then(() => {
-        return fsUsingPromise.promiseRemoveDir('test1_files')
+        return fsUsingPromise.promiseRemoveDir('test1_files');
     })
     .catch((error) => {
         if (error) {
             console.log(error);
         }
-    })
+    });
 
 //Using Async/Await
 
@@ -61,7 +56,7 @@ async function createDeleteUsingAsyncAwait() {
             await fsUsingAsyncAwait.asyncAwaitDelete('file3.json');
             console.log(`All files deleted using async/await`);
             await fsUsingAsyncAwait.asyncRemoveDir('test1_files');
-        }, 4000)
+        }, 4000);
     } catch (error) {
         if (error) {
             console.log(error);

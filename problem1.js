@@ -122,7 +122,7 @@ module.exports.fsUsingPromises = {
   promiseRemoveDir: removeDir,
 };
 
-//functions tp write and delete files using async/await
+//functions to write and delete files using async/await
 
 async function makeAsyncDir(dirName) {
   return new Promise((resolve, reject) => {
