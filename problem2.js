@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+//Read file data
 async function readFileContent(filePath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf-8', (error, data) => {
@@ -11,6 +12,8 @@ async function readFileContent(filePath) {
     });
   });
 }
+
+//Append Data into filenames.txt
 
 async function appendFileContent(data) {
   return new Promise((resolve, reject) => {
@@ -24,6 +27,8 @@ async function appendFileContent(data) {
   });
 }
 
+//write file content into a new file
+
 async function writeFileContent(data, filepath) {
   return new Promise((resolve, reject) => {
     fs.writeFile(filepath, data, (error) => {
@@ -36,6 +41,7 @@ async function writeFileContent(data, filepath) {
   });
 }
 
+//Remove a file
 async function removeFile(filePath) {
   return new Promise((resolve, reject) => {
     fs.unlink(filePath, (error) => {
@@ -48,9 +54,10 @@ async function removeFile(filePath) {
   });
 }
 
-async function makeContentUpperCase(filePath) {
+//Make content uppercase
+
+async function makeContentUpperCase(fileData) {
   try {
-    const fileData = await readFileContent(filePath);
     const upperCaseData = await fileData.toUpperCase();
     await writeFileContent(upperCaseData, 'uppercase.txt');
     return 'uppercase.txt';
@@ -60,6 +67,8 @@ async function makeContentUpperCase(filePath) {
     }
   }
 }
+
+//Make content into lowercase and split
 
 async function makeContentLowerCaseAndSplit(filePath) {
   try {
@@ -79,13 +88,15 @@ async function makeContentLowerCaseAndSplit(filePath) {
   }
 }
 
+//read the content and sort it into a new file
+
 async function readContentAndSort(fileNames) {
   try {
     const contents = [];
     await Promise.all(
       fileNames.map(async (fileName) => {
         const fileData = await readFileContent(fileName);
-        await contents.push(fileData);
+        contents.push(fileData);
       }),
     );
     await writeFileContent(contents.join('\n'), 'sorted.txt');
